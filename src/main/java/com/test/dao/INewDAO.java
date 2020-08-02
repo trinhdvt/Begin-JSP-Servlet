@@ -1,4 +1,4 @@
 package com.test.dao;
 
-public interface INewDAO {
+public interface INewDAO extends GenericDAO {
 }

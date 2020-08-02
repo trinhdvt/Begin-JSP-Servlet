@@ -1,14 +1,16 @@
 package com.test.dao.implement;
 
 import com.test.dao.ICategoryDAO;
+import com.test.mapper.CategoryMapper;
 import com.test.model.CategoryModel;
 
 import java.util.List;
 
-public class CategoryDAO implements ICategoryDAO {
+public class CategoryDAO extends AbstractDAO<CategoryModel> implements ICategoryDAO {
 
     @Override
     public List<CategoryModel> findAll() {
-        return null;
+        String sql = "select * from category";
+        return query(sql, new CategoryMapper());
     }
 }
