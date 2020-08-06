@@ -32,7 +32,7 @@ public class AbstractDAO<T extends AbstractModel> implements GenericDAO<T> {
             try {
                 stm = cnn.prepareStatement(sql);
 
-                // set parameter
+                setParameters(stm, params);
 
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -52,6 +52,20 @@ public class AbstractDAO<T extends AbstractModel> implements GenericDAO<T> {
             }
         }
         return null;
+    }
+
+    private void setParameters(PreparedStatement stm, Object[] params) {
+        try {
+            for (int i = 0; i < params.length; i++) {
+                if (params[i] instanceof Long)
+                    stm.setLong(i + 1, (Long) params[i]);
+                else if (params[i] instanceof String)
+                    stm.setString(i + 1, params[i] + "");
+
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     public void closeResource(Connection cnn, PreparedStatement stm, ResultSet rs) throws SQLException {
