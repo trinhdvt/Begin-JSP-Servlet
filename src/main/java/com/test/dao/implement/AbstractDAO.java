@@ -16,7 +16,6 @@ public class AbstractDAO<T extends AbstractModel> implements GenericDAO<T> {
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 //            String url = "jdbc:sqlserver://localhost;database=JSP_Servlet";
 //           return DriverManager.getConnection(url, "sa", "illusion");
-
             Class.forName("org.sqlite.JDBC");
             String url = "jdbc:sqlite:" + DB_PATH;
             return DriverManager.getConnection(url);
@@ -60,6 +59,68 @@ public class AbstractDAO<T extends AbstractModel> implements GenericDAO<T> {
         return null;
     }
 
+    @Override
+    public void update(String sql, Object... params) {
+        Connection cnn = getConnection();
+        if (cnn != null) {
+            try {
+                cnn.setAutoCommit(false);
+                try (PreparedStatement stm = cnn.prepareStatement(sql)) {
+                    setParameters(stm, params);
+                    stm.executeUpdate();
+                    cnn.commit();
+                }
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+                try {
+                    cnn.rollback();
+                } catch (SQLException ignored) {
+                }
+            } finally {
+                try {
+                    closeResource(cnn, null, null);
+                } catch (SQLException ignored) {
+                }
+            }
+        }
+    }
+
+    @Override
+    public Long insert(String sql, Object... params) {
+        Connection cnn = getConnection();
+        Long id = null;
+        if (cnn != null) {
+            try {
+                cnn.setAutoCommit(false);
+                try (PreparedStatement stm = cnn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                    setParameters(stm, params);
+                    stm.executeUpdate();
+
+                    cnn.commit();
+
+                    try (ResultSet rs = stm.getGeneratedKeys()) {
+                        if (rs.next())
+                            id = rs.getLong(1);
+                    }
+
+                    return id;
+                }
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+                try {
+                    cnn.rollback();
+                } catch (SQLException ignored) {
+                }
+            } finally {
+                try {
+                    closeResource(cnn, null, null);
+                } catch (SQLException ignored) {
+                }
+            }
+        }
+        return id;
+    }
+
     private void setParameters(PreparedStatement stm, Object[] params) {
         try {
             for (int i = 0; i < params.length; i++) {
@@ -67,7 +128,8 @@ public class AbstractDAO<T extends AbstractModel> implements GenericDAO<T> {
                     stm.setLong(i + 1, (Long) params[i]);
                 else if (params[i] instanceof String)
                     stm.setString(i + 1, params[i] + "");
-
+                else if (params[i] instanceof Integer)
+                    stm.setInt(i + 1, (Integer) params[i]);
             }
         } catch (SQLException throwable) {
             throwable.printStackTrace();
