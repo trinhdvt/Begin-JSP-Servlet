@@ -9,12 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractDAO<T extends AbstractModel> implements GenericDAO<T> {
+    private static final String DB_PATH = "D:\\Code\\Java\\JSP_Servlet\\Begin-JSP-Servlet\\db\\JSP_Servlet.db";
 
     public Connection getConnection() {
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://localhost;database=JSP_Servlet";
-            return DriverManager.getConnection(url, "sa", "illusion");
+//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            String url = "jdbc:sqlserver://localhost;database=JSP_Servlet";
+//           return DriverManager.getConnection(url, "sa", "illusion");
+
+            Class.forName("org.sqlite.JDBC");
+            String url = "jdbc:sqlite:" + DB_PATH;
+            return DriverManager.getConnection(url);
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             return null;
