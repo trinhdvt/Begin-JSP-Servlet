@@ -21,7 +21,7 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<CategoryModel> list = categoryService.findAll();
+//        List<CategoryModel> list = categoryService.findAll();
 
         RequestDispatcher rd = req.getRequestDispatcher("views/web/home.jsp");
         rd.forward(req, resp);

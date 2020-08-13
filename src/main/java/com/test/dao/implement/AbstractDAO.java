@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractDAO<T extends AbstractModel> implements GenericDAO<T> {
-    private static final String DB_PATH = "D:\\Code\\Java\\JSP_Servlet\\Begin-JSP-Servlet\\db\\JSP_Servlet.db";
+//    private static final String DB_PATH = "D:\\Code\\Java\\JSP_Servlet\\Begin-JSP-Servlet\\db\\JSP_Servlet.db";
+    private static final String DB_PATH = "db/JSP_Servlet.db";
 
     public Connection getConnection() {
         try {
