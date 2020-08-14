@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/common/taglib.jsp" %>
 <html>
 <head>
     <title>Title</title>
@@ -29,24 +30,17 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mary</td>
-                                        <td>Moe</td>
-                                        <td>mary@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>July</td>
-                                        <td>Dooley</td>
-                                        <td>july@example.com</td>
-                                    </tr>
+                                    <%--@elvariable id="model" type="com.test.model.NewModel"--%>
+                                    <c:forEach var="item" items="${model.listData}">
+                                        <tr>
+                                            <td>${item.title}</td>
+                                            <td>${item.shortDescription}</td>
+                                            <td>${item.content}</td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
-                                <ul class="pagination" id="pagination"></ul>
+                                <%--                                <ul class="pagination" id="pagination"></ul>--%>
                             </div>
                         </div>
                     </div>
@@ -55,7 +49,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
+<%--<script type="text/javascript">
     $(function () {
         window.pagObj = $('#pagination').twbsPagination({
             totalPages: 10,
@@ -68,6 +62,6 @@
         });
     });
 
-</script>
+</script>--%>
 </body>
 </html>
