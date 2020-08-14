@@ -7,5 +7,11 @@ import java.util.List;
 public interface INewService {
     List<NewModel> findByCategoryId(long categoryId);
 
-    Long saveNewModel(NewModel newModel);
+    Long saveModel(NewModel newModel);
+
+    NewModel updateModel(NewModel updateObj);
+
+    void deleteModel(Long... ids);
+
+    List<NewModel> findAll();
 }

@@ -1,11 +1,15 @@
 package com.test.model;
 
-public class AbstractModel {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AbstractModel<T> {
     protected long id;
     protected String createdDate;
     protected String modifiedDate;
     protected String createdBy;
     protected String modifiedBy;
+    protected List<T> listData = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -13,6 +17,14 @@ public class AbstractModel {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<T> getListData() {
+        return listData;
+    }
+
+    public void setListData(List<T> listData) {
+        this.listData = listData;
     }
 
     public String getCreatedDate() {
