@@ -10,6 +10,34 @@ public class AbstractModel<T> {
     protected String createdBy;
     protected String modifiedBy;
     protected List<T> listData = new ArrayList<>();
+    protected Integer currentPage;
+    protected Integer maxPageItems;
+    protected Integer totalPages;
+    protected Integer totalItems;
+
+    public Integer getTotalItems() {
+        return totalItems;
+    }
+
+    public void setTotalItems(Integer totalItems) {
+        this.totalItems = totalItems;
+    }
+
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(Integer currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public Integer getMaxPageItems() {
+        return maxPageItems;
+    }
+
+    public void setMaxPageItems(Integer maxPageItems) {
+        this.maxPageItems = maxPageItems;
+    }
 
     public long getId() {
         return id;
@@ -57,5 +85,13 @@ public class AbstractModel<T> {
 
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
+    }
+
+    public Integer getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
     }
 }

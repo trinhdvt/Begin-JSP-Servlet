@@ -1,9 +1,7 @@
 package com.test.mapper;
 
-import com.test.model.AbstractModel;
-
 import java.sql.ResultSet;
 
-public interface RowMapper<T extends AbstractModel> {
+public interface RowMapper<T> {
     T mapRow(ResultSet rs);
 }

@@ -13,7 +13,7 @@ public class NewDAO extends AbstractDAO<NewModel> implements INewDAO {
     @Override
     public List<NewModel> findByCategoryId(long categoryId) {
         String query = "select * from news where category_id=?";
-        return query(query, new NewMapper(), categoryId);
+        return select(query, new NewMapper(), categoryId);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class NewDAO extends AbstractDAO<NewModel> implements INewDAO {
     @Override
     public NewModel findOne(Long id) {
         String sql = "select * from news where id=?";
-        var res = query(sql, new NewMapper(), id);
+        var res = select(sql, new NewMapper(), id);
         if (res == null || res.isEmpty())
             return null;
         else return res.get(0);
@@ -53,8 +53,14 @@ public class NewDAO extends AbstractDAO<NewModel> implements INewDAO {
     }
 
     @Override
-    public List<NewModel> findAll() {
-        String sql = "select * from news";
-        return query(sql, new NewMapper());
+    public List<NewModel> findAll(Integer offset, Integer limit) {
+        String sql = "select * from news limit ?,?";
+        return select(sql, new NewMapper(), offset, limit);
+    }
+
+    @Override
+    public int getTotalItems() {
+        String sql = "select count(*) from news";
+        return count(sql);
     }
 }

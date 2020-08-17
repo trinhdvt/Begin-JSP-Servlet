@@ -13,5 +13,7 @@ public interface INewService {
 
     void deleteModel(Long... ids);
 
-    List<NewModel> findAll();
+    List<NewModel> findAll(Integer offset, Integer limit);
+
+    int getTotalItems();
 }

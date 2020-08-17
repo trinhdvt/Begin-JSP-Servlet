@@ -2,13 +2,12 @@ package com.test.dao.implement;
 
 import com.test.dao.GenericDAO;
 import com.test.mapper.RowMapper;
-import com.test.model.AbstractModel;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractDAO<T extends AbstractModel> implements GenericDAO<T> {
+public class AbstractDAO<T> implements GenericDAO<T> {
     private static final String DB_PATH = "db/JSP_Servlet.db";
 
     public Connection getConnection() {
@@ -27,7 +26,7 @@ public class AbstractDAO<T extends AbstractModel> implements GenericDAO<T> {
     }
 
     @Override
-    public List<T> query(String sql, RowMapper<T> rowMapper, Object... params) {
+    public List<T> select(String sql, RowMapper<T> rowMapper, Object... params) {
         Connection cnn = getConnection();
         List<T> result;
         PreparedStatement stm = null;
@@ -119,6 +118,33 @@ public class AbstractDAO<T extends AbstractModel> implements GenericDAO<T> {
             }
         }
         return id;
+    }
+
+    @Override
+    public int count(String sql, Object... params) {
+        var cnn = getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        if (cnn != null) {
+            try {
+                stm = cnn.prepareStatement(sql);
+                setParameters(stm, params);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            } catch (SQLException throwable) {
+                throwable.printStackTrace();
+                return 0;
+            } finally {
+                try {
+                    closeResource(cnn, stm, rs);
+                } catch (SQLException ignored) {
+                }
+            }
+
+        }
+        return 0;
     }
 
     private void setParameters(PreparedStatement stm, Object[] params) {
