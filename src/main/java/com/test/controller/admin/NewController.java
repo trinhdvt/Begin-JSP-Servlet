@@ -22,7 +22,26 @@ public class NewController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         NewModel newModel = new NewModel();
-        newModel.setListData(newService.findAll());
+
+        var currentPage = req.getParameter("currentPage");
+        if (currentPage != null) {
+            newModel.setCurrentPage(Integer.parseInt(currentPage));
+        } else {
+            newModel.setCurrentPage(1);
+        }
+        var maxPageItems = req.getParameter("maxPageItems");
+        if (maxPageItems != null) {
+            newModel.setMaxPageItems(Integer.parseInt(maxPageItems));
+        } else {
+            newModel.setMaxPageItems(2);
+        }
+
+        int offset = (newModel.getCurrentPage() - 1) * newModel.getMaxPageItems();
+        var data = newService.findAll(offset, newModel.getMaxPageItems());
+        newModel.setListData(data);
+        newModel.setTotalItems(newService.getTotalItems());
+        newModel.setTotalPages((int) Math.ceil((double) newModel.getTotalItems() / newModel.getMaxPageItems()));
+
         req.setAttribute(Constant.MODEL, newModel);
         RequestDispatcher rd = req.getRequestDispatcher("views/admin/news/list.jsp");
         rd.forward(req, resp);
