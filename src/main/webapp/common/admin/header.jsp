@@ -16,10 +16,10 @@
             <ul class="nav ace-nav">
                 <li class="light-blue dropdown-modal">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        Xin chào, hello
+                        Xin chào
                     </a>
                 <li class="light-blue dropdown-modal">
-                    <a href='#'>
+                    <a href="#">
                         <i class="ace-icon fa fa-power-off"></i>
                         Thoát
                     </a>

@@ -3,9 +3,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div id="sidebar" class="sidebar                  responsive                    ace-save-state">
     <script type="text/javascript">
-        try{ace.settings.loadState('sidebar')}catch(e){}
-
-
+        try {
+            ace.settings.loadState('sidebar')
+        } catch (e) {
+        }
     </script>
     <div class="sidebar-shortcuts">
         <div class="sidebar-shortcuts-large">
@@ -46,7 +47,7 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li>
-                    <a href='<c:url value="/admin-new"/> '>
+                    <a href='<c:url value="/admin-new?currentPage=1&maxPageItems=2"/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         DS bài viết
                     </a>
