@@ -2,6 +2,7 @@ package com.test.service.implement;
 
 import com.test.dao.INewDAO;
 import com.test.model.NewModel;
+import com.test.paging.Pageable;
 import com.test.service.INewService;
 
 import javax.annotation.ManagedBean;
@@ -44,8 +45,8 @@ public class NewService implements INewService {
     }
 
     @Override
-    public List<NewModel> findAll(Integer offset, Integer limit) {
-        return newDAO.findAll(offset, limit);
+    public List<NewModel> findAll(Pageable pageable) {
+        return newDAO.findAll(pageable);
     }
 
     @Override

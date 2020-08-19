@@ -1,6 +1,7 @@
 package com.test.service;
 
 import com.test.model.NewModel;
+import com.test.paging.Pageable;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface INewService {
 
     void deleteModel(Long... ids);
 
-    List<NewModel> findAll(Integer offset, Integer limit);
+    List<NewModel> findAll(Pageable pageable);
 
     int getTotalItems();
 }
