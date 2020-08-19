@@ -2,7 +2,11 @@ package com.test.controller.admin;
 
 import com.test.constant.Constant;
 import com.test.model.NewModel;
+import com.test.paging.PageRequest;
+import com.test.paging.Pageable;
+import com.test.paging.Sorter;
 import com.test.service.INewService;
+import com.test.utils.FormUtils;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -21,23 +25,11 @@ public class NewController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        NewModel newModel = new NewModel();
+        NewModel newModel = FormUtils.toModel(NewModel.class, req);
+        Pageable pageable = new PageRequest(newModel.getCurrentPage(), newModel.getMaxPageItems(),
+                new Sorter(newModel.getSortOrder(), newModel.getSortBy()));
+        var data = newService.findAll(pageable);
 
-        var currentPage = req.getParameter("currentPage");
-        if (currentPage != null) {
-            newModel.setCurrentPage(Integer.parseInt(currentPage));
-        } else {
-            newModel.setCurrentPage(1);
-        }
-        var maxPageItems = req.getParameter("maxPageItems");
-        if (maxPageItems != null) {
-            newModel.setMaxPageItems(Integer.parseInt(maxPageItems));
-        } else {
-            newModel.setMaxPageItems(2);
-        }
-
-        int offset = (newModel.getCurrentPage() - 1) * newModel.getMaxPageItems();
-        var data = newService.findAll(offset, newModel.getMaxPageItems());
         newModel.setListData(data);
         newModel.setTotalItems(newService.getTotalItems());
         newModel.setTotalPages((int) Math.ceil((double) newModel.getTotalItems() / newModel.getMaxPageItems()));
