@@ -3,6 +3,7 @@ package com.test.dao.implement;
 import com.test.dao.INewDAO;
 import com.test.mapper.NewMapper;
 import com.test.model.NewModel;
+import com.test.paging.Pageable;
 
 import javax.annotation.ManagedBean;
 import java.util.List;
@@ -53,9 +54,24 @@ public class NewDAO extends AbstractDAO<NewModel> implements INewDAO {
     }
 
     @Override
-    public List<NewModel> findAll(Integer offset, Integer limit) {
-        String sql = "select * from news limit ?,?";
-        return select(sql, new NewMapper(), offset, limit);
+    public List<NewModel> findAll(Pageable pageable) {
+        StringBuilder sql = new StringBuilder("select * from news");
+
+        var sorter = pageable.getSorter();
+        var sortBy = sorter.getSortBy();
+        var sortOrder = sorter.getSortOrder();
+        if (sortBy != null && sortOrder != null) {
+            sql.append(" order by ").append(sortBy).append(" ").append(sortOrder);
+        }
+
+        var offset = pageable.getOffset();
+        var limit = pageable.getLimit();
+        if (offset != null && limit != null) {
+            sql.append(" limit ").append(" ?,?");
+            return select(sql.toString(), new NewMapper(), offset, limit);
+        }
+
+        return select(sql.toString(), new NewMapper());
     }
 
     @Override
