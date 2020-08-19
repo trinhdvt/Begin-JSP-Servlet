@@ -1,6 +1,7 @@
 package com.test.dao;
 
 import com.test.model.NewModel;
+import com.test.paging.Pageable;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface INewDAO {
 
     void deleteModel(Long id);
 
-    List<NewModel> findAll(Integer offset, Integer limit);
+    List<NewModel> findAll(Pageable pageable);
 
     int getTotalItems();
 }
