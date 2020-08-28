@@ -1,3 +1,6 @@
+<%@include file="/common/taglib.jsp" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="#">Start Bootstrap</a>
@@ -13,7 +16,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="<c:url value="/dang-nhap?action=login" />">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Services</a>

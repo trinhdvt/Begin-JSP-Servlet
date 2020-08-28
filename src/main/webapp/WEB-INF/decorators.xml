@@ -3,12 +3,14 @@
     <excludes>
         <pattern>/404-page.html</pattern>
         <pattern>/api*</pattern>
-        <pattern>/dang-nhap</pattern>
     </excludes>
     <decorator name="admin" page="admin.jsp">
         <pattern>/admin*</pattern>
     </decorator>
     <decorator name="web" page="web.jsp">
         <pattern>/*</pattern>
+    </decorator>
+    <decorator name="login" page="login.jsp">
+        <pattern>/dang-nhap*</pattern>
     </decorator>
 </decorators>
