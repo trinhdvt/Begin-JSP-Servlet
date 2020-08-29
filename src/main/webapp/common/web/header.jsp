@@ -15,9 +15,20 @@
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/dang-nhap?action=login" />">Login</a>
-                </li>
+                <%--@elvariable id="USERMODEL" type="com.test.model.UserModel"--%>
+                <c:if test="${not empty USERMODEL}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Welcome ${USERMODEL.fullName}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/thoat?action=logout" />">Thoat</a>
+                    </li>
+                </c:if>
+                <c:if test="${empty USERMODEL}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/dang-nhap?action=login" />">Login</a>
+                    </li>
+                </c:if>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Services</a>
                 </li>
