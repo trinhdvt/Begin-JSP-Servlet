@@ -6,18 +6,22 @@ import com.test.mapper.RowMapper;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class AbstractDAO<T> implements GenericDAO<T> {
-    private static final String DB_PATH = "db/JSP_Servlet.db";
+    //    private static final String DB_PATH = "db/JSP_Servlet.db";
+    private final ResourceBundle resource = ResourceBundle.getBundle("db");
 
     public Connection getConnection() {
         try {
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 //            String url = "jdbc:sqlserver://localhost;database=JSP_Servlet";
 //           return DriverManager.getConnection(url, "sa", "illusion");
-            Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:" + DB_PATH;
-            return DriverManager.getConnection(url);
+//            Class.forName("org.sqlite.JDBC");
+//            String url = "jdbc:sqlite:" + DB_PATH;
+//            return DriverManager.getConnection(url);
+            Class.forName(resource.getString("DRIVER_NAME"));
+            return DriverManager.getConnection(resource.getString("DB_PATH"));
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
