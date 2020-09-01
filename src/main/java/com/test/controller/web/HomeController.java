@@ -1,5 +1,6 @@
 package com.test.controller.web;
 
+import com.test.constant.Constant;
 import com.test.model.UserModel;
 import com.test.service.IUserService;
 import com.test.utils.FormUtils;
@@ -48,10 +49,10 @@ public class HomeController extends HttpServlet {
             String redirectPath = req.getContextPath();
             user = userService.findUser(user.getUserName(), user.getPassword(), 1);
             if (user != null) {
-                SessionUtil.getInstance().putValue(req, "USERMODEL", user);
-                if (user.getRoleModel().getCode().equals("ADMIN")) {
+                SessionUtil.getInstance().putValue(req, Constant.USER_MODEL, user);
+                if (user.getRoleModel().getCode().equals(Constant.ADMIN)) {
                     redirectPath += "/admin";
-                } else if (user.getRoleModel().getCode().equals("USER")) {
+                } else if (user.getRoleModel().getCode().equals(Constant.USER)) {
                     redirectPath += "/trang-chu";
                 }
                 resp.sendRedirect(redirectPath);
